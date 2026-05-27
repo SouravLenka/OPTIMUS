@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OPTIMUS AI | Cybernetic Operating System</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,500;0,700;1,400&family=Orbitron:wght@400;600;800;900&family=Poppins:wght@300;400;500;600&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Holographic Scanline Overlay -->
+    <div class="scanlines"></div>
+    <div class="hologram-glow"></div>
+
+    <!-- Background Canvas (Particle Grid & Ambient Stars) -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- ====================================================
+         STARTUP BOOT SEQUENCE SCREEN
+         ==================================================== -->
+    <div id="boot-screen" class="boot-screen">
+        <div class="boot-container">
+            <div class="boot-logo">
+                <div class="logo-hexagon">
+                    <span class="logo-letter">Ω</span>
+                </div>
+                <h1 class="boot-title">OPTIMUS<span>v3.4.0</span></h1>
+            </div>
+            
+            <div class="boot-terminal">
+                <div class="boot-log" id="boot-log">
+                    <p class="log-line text-cyan">> INITIALIZING BOOT ROUTINE...</p>
+                </div>
+            </div>
+
+            <div class="boot-loader-container">
+                <div class="boot-loader-bar">
+                    <div class="boot-progress" id="boot-progress"></div>
+                </div>
+                <div class="boot-stats">
+                    <span id="boot-status-text">INITIALIZING CORE KERNEL...</span>
+                    <span id="boot-percent">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====================================================
+         MAIN APPLICATION HUD
+         ==================================================== -->
+    <div id="app-container" class="app-container hidden">
+        
+        <!-- TOP STATUS HUD BAR -->
+        <header id="top-bar" class="top-bar">
+            <div class="top-left">
+                <div class="system-tag">
+                    <span class="pulse-dot"></span>
+                    <span class="tag-label">OPTIMUS SYSTEM : ACTIVE</span>
+                </div>
+                <div class="system-spec">KERNEL V4.9 // CORE.SYS</div>
+            </div>
+
+            <div class="top-center">
+                <div class="ai-status-display">
+                    <i data-lucide="cpu" class="icon-glow-cyan text-cyan"></i>
+                    <span class="status-label">ASSISTANT MODE:</span>
+                    <span id="current-state-text" class="status-val text-cyan">IDLE</span>
+                </div>
+            </div>
+
+            <div class="top-right">
+                <div class="network-status telemetry-item">
+                    <i data-lucide="wifi" id="wifi-icon" class="text-cyan"></i>
+                    <span id="network-text">ONLINE</span>
+                </div>
+                <div class="battery-status telemetry-item">
+                    <i data-lucide="battery-charging" id="battery-icon" class="text-cyan"></i>
+                    <span id="battery-percent">98%</span>
+                </div>
+                <div class="time-widget">
+                    <span id="hud-time" class="hud-time">12:00:00</span>
+                    <span id="hud-date" class="hud-date">MON / MAY 25</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW WRAPPER -->
+        <div class="hud-body">
+            
+            <!-- LEFT SLIM HIGH-TECH SIDEBAR -->
+            <aside class="sidebar">
+                <div class="sidebar-logo">
+                    <span class="logo-glow">Ω</span>
+                </div>
+                
+                <nav class="sidebar-nav">
+                    <button class="nav-btn active" data-tab="dashboard" title="Home Assistant">
+                        <i data-lucide="activity"></i>
+                        <span class="nav-text">Core HUD</span>
+                    </button>
+                    <button class="nav-btn" data-tab="ai-chat" title="AI Interactive Chat">
+                        <i data-lucide="message-square"></i>
+                        <span class="nav-text">AI Chat</span>
+                    </button>
+                    <button class="nav-btn" data-tab="automation" title="Automation Routines">
+                        <i data-lucide="sliders"></i>
+                        <span class="nav-text">Automation</span>
+                    </button>
+                    <button class="nav-btn" data-tab="logs" title="System Event Logs">
+                        <i data-lucide="terminal"></i>
+                        <span class="nav-text">Event Logs</span>
+                    </button>
+                    <button class="nav-btn" id="open-settings-btn" title="System Settings">
+                        <i data-lucide="settings"></i>
+                        <span class="nav-text">Settings</span>
+                    </button>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="connection-status connected" title="Eel Python Backend Status">
+                        <span class="status-dot"></span>
+                        <span class="status-name">EEL: MOCK</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- VIEWPORT CONTENT AREA -->
+            <main class="viewport">
+                
+                <!-- ==================== TAB 1: CORE HUD ==================== -->
+                <section id="tab-dashboard" class="hud-tab active">
+                    <div class="dashboard-grid">
+                        
+                        <!-- LEFT COLUMN: SYSTEM WIDGETS -->
+                        <div class="dashboard-panel panel-left animate-slide-in">
+                            <div class="panel-header">
+                                <i data-lucide="bar-chart-3" class="text-cyan"></i>
+                                <h2>TELEMETRY DIAGNOSTICS</h2>
+                                <span class="decor-corner top-right"></span>
+                            </div>
+                            <div class="panel-content flex-column">
+                                <!-- Telemetry Gauges Grid -->
+                                <div class="gauges-grid">
+                                    <div class="gauge-card">
+                                        <div class="gauge-ring-wrapper">
+                                            <svg class="circular-gauge" viewBox="0 0 100 100">
+                                                <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                                <circle id="cpu-gauge" class="gauge-bar text-cyan" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="100" />
+                                            </svg>
+                                            <div class="gauge-value" id="cpu-value">42%</div>
+                                        </div>
+                                        <span class="gauge-label">CPU LOAD</span>
+                                    </div>
+
+                                    <div class="gauge-card">
+                                        <div class="gauge-ring-wrapper">
+                                            <svg class="circular-gauge" viewBox="0 0 100 100">
+                                                <circle class="gauge-bg" cx="50" cy="50" r="40" />
+                                                <circle id="ram-gauge" class="gauge-bar text-purple" cx="50" cy="50" r="40" stroke-dasharray="251.2" stroke-dashoffset="150" />
+                                            </svg>
+                                            <div class="gauge-value" id="ram-value">58%</div>
+                                        </div>
+                                        <span class="gauge-label">MEM UTIL</span>
+                                    </div>
+                                </div>
+
+                                <!-- Linear Stats list -->
+                                <div class="stat-progress-list">
+                                    <div class="progress-item">
+                                        <div class="progress-labels">
+                                            <span>GPU LOAD</span>
+                                            <span id="gpu-val-text" class="text-cyan">28%</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div id="gpu-progress-bar" class="progress-fill bg-cyan" style="width: 28%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress-item">
+                                        <div class="progress-labels">
+                                            <span>STORAGE DISK (C:)</span>
+                                            <span class="text-purple">64%</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div class="progress-fill bg-purple" style="width: 64%"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="progress-item">
+                                        <div class="progress-labels">
+                                            <span>NET TEMP</span>
+                                            <span id="temp-val-text" class="text-blue">48°C</span>
+                                        </div>
+                                        <div class="progress-track">
+                                            <div id="temp-progress-bar" class="progress-fill bg-blue" style="width: 48%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- System Active Processes List -->
+                                <div class="panel-section-divider"></div>
+                                <div class="processes-section">
+                                    <h3 class="section-title"><i data-lucide="shield-alert"></i> THREAD SECURITY</h3>
+                                    <div class="sys-threads">
+                                        <div class="thread-item">
+                                            <span class="thread-dot green"></span>
+                                            <span class="thread-name">voice_listener.py</span>
+                                            <span class="thread-pid">PID 4820</span>
+                                            <span class="thread-stat">RUNNING</span>
+                                        </div>
+                                        <div class="thread-item">
+                                            <span class="thread-dot green"></span>
+                                            <span class="thread-name">eel_server.exe</span>
+                                            <span class="thread-pid">PID 1092</span>
+                                            <span class="thread-stat">LISTENING</span>
+                                        </div>
+                                        <div class="thread-item">
+                                            <span class="thread-dot blue"></span>
+                                            <span class="thread-name">optimus_brain_v3.bin</span>
+                                            <span class="thread-pid">PID 8821</span>
+                                            <span class="thread-stat">STANDBY</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CENTER COLUMN: THE CORE ORB & VOICE WAVES -->
+                        <div class="dashboard-panel panel-center no-border">
+                            <div class="core-stage-container">
+                                
+                                <!-- Holographic Scanning Rings & Core -->
+                                <div class="core-wrapper" id="core-interactive-trigger">
+                                    <div class="hologram-grid-circle"></div>
+                                    <!-- Concentric Rotating SVG Rings -->
+                                    <div class="ring outer-ring">
+                                        <svg viewBox="0 0 100 100">
+                                            <circle class="svg-ring-path outer" cx="50" cy="50" r="46" stroke-dasharray="30 20 40 10 15 25" />
+                                        </svg>
+                                    </div>
+                                    <div class="ring middle-ring">
+                                        <svg viewBox="0 0 100 100">
+                                            <circle class="svg-ring-path middle" cx="50" cy="50" r="38" stroke-dasharray="60 30 15 40" />
+                                        </svg>
+                                    </div>
+                                    <div class="ring inner-ring">
+                                        <svg viewBox="0 0 100 100">
+                                            <circle class="svg-ring-path inner" cx="50" cy="50" r="30" stroke-dasharray="10 5 20 15 30 10" />
+                                        </svg>
+                                    </div>
+                                    
+                                    <!-- Inner AI Core Pulsing Orb -->
+                                    <div class="ai-orb-core" id="ai-orb">
+                                        <div class="orb-inner-sphere"></div>
+                                        <div class="orb-glow-layer"></div>
+                                        <div class="orb-particles"></div>
+                                    </div>
+
+                                    <!-- Holographic Scanning Line Animation -->
+                                    <div class="hologram-scanner"></div>
+                                </div>
+
+                                <!-- Orb Control Info -->
+                                <div class="core-info">
+                                    <div id="orb-mode-label" class="orb-mode-label cyan-glow">SYSTEM IDLE</div>
+                                    <div id="orb-sub-text" class="orb-sub-text">CLICK CORE TO TRIGGER VOICE CAPTURE</div>
+                                </div>
+
+                                <!-- Animated Audio Visualizer Wave Canvas -->
+                                <div class="visualizer-wrapper">
+                                    <canvas id="visualizer-canvas"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: CHAT TERMINAL / LOGS -->
+                        <div class="dashboard-panel panel-right animate-slide-in">
+                            <div class="panel-header">
+                                <i data-lucide="terminal" class="text-purple"></i>
+                                <h2>OPTIMUS INTELLIGENCE LOGS</h2>
+                                <span class="decor-corner top-right"></span>
+                            </div>
+                            <div class="panel-content flex-column overflow-hidden">
+                                <!-- Command Log History -->
+                                <div class="terminal-body" id="hud-terminal-history">
+                                    <div class="terminal-line system-line">
+                                        <span class="term-time">[12:44:45]</span>
+                                        <span class="term-tag bg-cyan">SYS</span>
+                                        <span class="term-msg">OPTIMUS SYSTEM CORE ACTIVE. ALL CHANNELS INITIALIZED.</span>
+                                    </div>
+                                    <div class="terminal-line response-line">
+                                        <span class="term-time">[12:44:47]</span>
+                                        <span class="term-tag bg-purple">OPTIMUS</span>
+                                        <span class="term-msg typing-effect-init">Greetings Commander. I am online and fully calibrated. How can I assist you today?</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Floating Quick Assist Buttons -->
+                                <div class="quick-command-dock">
+                                    <button class="quick-cmd-btn" data-cmd="What is my system load?">
+                                        <i data-lucide="cpu"></i> Sys Load
+                                    </button>
+                                    <button class="quick-cmd-btn" data-cmd="Initiate diagnostic check">
+                                        <i data-lucide="shield-check"></i> Diagnostics
+                                    </button>
+                                    <button class="quick-cmd-btn" data-cmd="Run weather update">
+                                        <i data-lucide="cloud-sun"></i> Weather
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== TAB 2: INTERACTIVE AI CHAT ==================== -->
+                <section id="tab-ai-chat" class="hud-tab">
+                    <div class="panel-glass chat-page-container">
+                        <div class="chat-header">
+                            <div class="chat-agent-info">
+                                <div class="mini-orb">
+                                    <span class="mini-pulse"></span>
+                                </div>
+                                <div>
+                                    <h3>OPTIMUS COGNITIVE SYSTEM</h3>
+                                    <p>Model: Optimus-DeepMind-v3 (Eel Active)</p>
+                                </div>
+                            </div>
+                            <div class="chat-controls">
+                                <button class="icon-btn-text" id="clear-chat-btn">
+                                    <i data-lucide="trash-2"></i> Clear Terminal
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-conversation-area" id="chat-messages-container">
+                            <div class="chat-bubble bot-message">
+                                <div class="msg-avatar">Ω</div>
+                                <div class="msg-content">
+                                    <p>This panel provides a full dialog workspace. You can type commands, query files, write automation tasks, or execute shell bindings seamlessly.</p>
+                                    <span class="msg-time">12:45:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== TAB 3: AUTOMATION ROUTINES ==================== -->
+                <section id="tab-automation" class="hud-tab">
+                    <div class="automation-container">
+                        <div class="dashboard-panel full-width animate-slide-in">
+                            <div class="panel-header">
+                                <i data-lucide="play-circle" class="text-cyan"></i>
+                                <h2>SYSTEM AUTOMATION & TASKS</h2>
+                                <span class="decor-corner top-right"></span>
+                            </div>
+                            <div class="panel-content">
+                                <p class="p-sub">Trigger pre-configured diagnostic runs, active file cleanups, web scrapes, or voice-to-text macros instantly through Python bindings.</p>
+                                
+                                <div class="automation-cards-grid">
+                                    <div class="auto-card">
+                                        <div class="auto-card-icon">
+                                            <i data-lucide="refresh-cw" class="text-cyan"></i>
+                                        </div>
+                                        <div class="auto-card-info">
+                                            <h4>System Resource Clean</h4>
+                                            <p>Flushes user temporary caches, cleans up memory leaks, and restarts idle threads.</p>
+                                        </div>
+                                        <div class="auto-card-action">
+                                            <button class="glowing-btn active run-automation-btn" data-task="System Cache Flush">RUN MACRO</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="auto-card">
+                                        <div class="auto-card-icon">
+                                            <i data-lucide="shield-check" class="text-purple"></i>
+                                        </div>
+                                        <div class="auto-card-info">
+                                            <h4>Hardware Integrity Check</h4>
+                                            <p>Monitors kernel diagnostics, active storage health blocks, and temperature parameters.</p>
+                                        </div>
+                                        <div class="auto-card-action">
+                                            <button class="glowing-btn active run-automation-btn" data-task="Hardware Integrity Diagnostic">RUN DIAG</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="auto-card">
+                                        <div class="auto-card-icon">
+                                            <i data-lucide="globe" class="text-blue"></i>
+                                        </div>
+                                        <div class="auto-card-info">
+                                            <h4>News Feed & Tech Aggregator</h4>
+                                            <p>Queries online APIs for technical bulletins and pushes briefings into the assistant logs.</p>
+                                        </div>
+                                        <div class="auto-card-action">
+                                            <button class="glowing-btn active run-automation-btn" data-task="Tech Bulletin Scraper">SCRAPE FEED</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="auto-card">
+                                        <div class="auto-card-icon">
+                                            <i data-lucide="hard-drive" class="text-cyan"></i>
+                                        </div>
+                                        <div class="auto-card-info">
+                                            <h4>Workspace Code Indexer</h4>
+                                            <p>Triggers Python scripts to parse current repositories, build semantic summaries, and optimize brain context.</p>
+                                        </div>
+                                        <div class="auto-card-action">
+                                            <button class="glowing-btn active run-automation-btn" data-task="Project Repository Indexer">INDEX CODE</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ==================== TAB 4: SYSTEM EVENT LOGS ==================== -->
+                <section id="tab-logs" class="hud-tab">
+                    <div class="logs-container">
+                        <div class="dashboard-panel full-width animate-slide-in">
+                            <div class="panel-header">
+                                <i data-lucide="terminal" class="text-cyan"></i>
+                                <h2>REAL-TIME RUNTIME CONSOLE LOGS</h2>
+                                <button class="header-btn" id="export-logs-btn"><i data-lucide="download"></i> Save Logs</button>
+                                <span class="decor-corner top-right"></span>
+                            </div>
+                            <div class="panel-content overflow-hidden">
+                                <div class="full-size-terminal">
+                                    <div class="terminal-toolbar">
+                                        <div class="term-circles">
+                                            <span class="c-red"></span>
+                                            <span class="c-yellow"></span>
+                                            <span class="c-green"></span>
+                                        </div>
+                                        <div class="term-title">optimus_runtime_debug.log</div>
+                                        <div class="term-encoding">UTF-8 // CONSOLE</div>
+                                    </div>
+                                    <div class="terminal-content" id="master-console-logs">
+                                        <div class="log-entry sys"><span class="log-t">[12:44:45.002]</span> <span class="log-m">System boot routine active. Loading runtime dependencies.</span></div>
+                                        <div class="log-entry ok"><span class="log-t">[12:44:45.091]</span> <span class="log-m">Importing EEL Python Framework: BINDINGS COMPLETED.</span></div>
+                                        <div class="log-entry info"><span class="log-t">[12:44:45.150]</span> <span class="log-m">Listening for Python RPC calls on localhost port 8000.</span></div>
+                                        <div class="log-entry ok"><span class="log-t">[12:44:45.302]</span> <span class="log-m">Synthesizer voices verified: 8 English neural voice assets ready.</span></div>
+                                        <div class="log-entry warn"><span class="log-t">[12:44:45.411]</span> <span class="log-m">Python Eel framework offline: Running in mock browser frontend simulation.</span></div>
+                                        <div class="log-entry info"><span class="log-t">[12:44:46.000]</span> <span class="log-m">OPTIMUS system fully calibrated. Startup greeting triggered.</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- ====================================================
+             BOTTOM COMMAND & INPUT DOCK BAR
+             ==================================================== -->
+        <footer class="input-dock-bar">
+            <div class="dock-container">
+                
+                <!-- Voice Active Glowing Wave visualizer -->
+                <div class="voice-ripple-backdrop" id="voice-ripple"></div>
+
+                <!-- Microphone activation Button -->
+                <button class="mic-button" id="mic-activation-btn" title="Toggle Voice Recognition">
+                    <div class="mic-glow"></div>
+                    <i data-lucide="mic" id="mic-icon-svg"></i>
+                </button>
+
+                <!-- Custom Command input and Send -->
+                <form class="command-form" id="command-form-submit" autocomplete="off">
+                    <div class="input-glow-wrapper">
+                        <i data-lucide="terminal" class="term-input-icon text-cyan"></i>
+                        <input type="text" id="command-input" placeholder="Execute console command or ask OPTIMUS... (e.g., 'diagnostics')" />
+                        <span class="cyber-brackets">[</span>
+                        <span class="cyber-brackets right">]</span>
+                    </div>
+                    <button type="submit" class="command-send-btn" id="send-command-btn" title="Submit Command">
+                        <i data-lucide="send"></i>
+                        <span>EXECUTE</span>
+                    </button>
+                </form>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ====================================================
+         SETTINGS SYSTEM OVERLAY MODAL
+         ==================================================== -->
+    <div id="settings-modal" class="settings-modal hidden">
+        <div class="settings-dialog">
+            <div class="settings-header">
+                <h2><i data-lucide="sliders" class="text-cyan"></i> SYSTEM REGISTRY SETTINGS</h2>
+                <button class="settings-close" id="close-settings-btn">&times;</button>
+            </div>
+            
+            <div class="settings-grid">
+                <!-- Sidebar tabs within Settings -->
+                <div class="settings-menu">
+                    <button class="set-menu-btn active" data-sec="set-core">AI CORE ENGINE</button>
+                    <button class="set-menu-btn" data-sec="set-audio">VOICE SYNTHESIS</button>
+                    <button class="set-menu-btn" data-sec="set-visual">HUD COSMETICS</button>
+                    <button class="set-menu-btn" data-sec="set-sys">SYSTEM INTEGRATION</button>
+                </div>
+
+                <!-- Settings Content area -->
+                <div class="settings-content">
+                    
+                    <!-- Section: AI CORE -->
+                    <div class="settings-section active" id="set-core">
+                        <h3>AI CORE CONFIGURATION</h3>
+                        <div class="settings-card">
+                            <label class="setting-label">Active Neural Architecture</label>
+                            <select class="settings-select" id="setting-ai-model">
+                                <option value="optimus-prime">Optimus Cognitive Prime (Llama-3-70B)</option>
+                                <option value="optimus-hybrid">Optimus Hybrid Fast (Gemini-Flash)</option>
+                                <option value="optimus-local">Optimus Local Core (Phi-3-4B Offline)</option>
+                            </select>
+                            <p class="setting-desc">Sets the main large language model used for resolving desktop prompts.</p>
+                        </div>
+                        
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Continuous Learning Loop</label>
+                                <p class="setting-desc">Index background documents and user behavior to refine assistant predictions.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-learning" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-card">
+                            <label class="setting-label">Cognitive Temperature: <span id="temp-val" class="text-cyan">0.4</span></label>
+                            <input type="range" class="settings-range" id="setting-temp" min="0" max="1" step="0.1" value="0.4">
+                            <p class="setting-desc">Higher settings produce creative output, lower configurations yield precision facts.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section: VOICE -->
+                    <div class="settings-section" id="set-audio">
+                        <h3>VOICE SYNTHESIS & INPUT</h3>
+                        <div class="settings-card">
+                            <label class="setting-label">Vocal Synthesizer profile</label>
+                            <select class="settings-select" id="setting-voice">
+                                <option value="male-deep">Optimus Male-Core (Deep Cybernetic)</option>
+                                <option value="female-cyan">Nova Female-Core (Electric Cyan)</option>
+                                <option value="synth-hologram">Hologram AI Voice (Jarvis Mode)</option>
+                            </select>
+                            <p class="setting-desc">Select the synthesized engine used to vocalize answers.</p>
+                        </div>
+
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Audio Feed Sound Effects</label>
+                                <p class="setting-desc">Enable dynamic digital sound feedback on hover, boots, and executions.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-sounds" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-card">
+                            <label class="setting-label">Mic Wake-Word Detection Threshold</label>
+                            <input type="range" class="settings-range" id="setting-mic-sens" min="0" max="100" value="70">
+                            <p class="setting-desc">Triggers recording when microphone decibels surpass this threshold.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section: HUD COSMETICS -->
+                    <div class="settings-section" id="set-visual">
+                        <h3>HUD COSMETICS & GRAPHICS</h3>
+                        <div class="settings-card">
+                            <label class="setting-label">Color Hue Profile</label>
+                            <select class="settings-select" id="setting-color-theme">
+                                <option value="default-cyber">Default (Electric Cyan & Purple)</option>
+                                <option value="neon-fire">Solar Flare (Hot Gold & Cyber Red)</option>
+                                <option value="matrix-code">Matrix Code (Classic Neon Green)</option>
+                                <option value="deep-abyss">Deep Abyss (Electric Blue & Dark Navy)</option>
+                            </select>
+                            <p class="setting-desc">Modifies glowing overlays, background vectors, and circular HUD gauges.</p>
+                        </div>
+
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Holographic Scanline Filter</label>
+                                <p class="setting-desc">Overlays cybernetic horizontal refresh lines to emulate computer terminals.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-scanlines" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Fluid Canvas Background Particles</label>
+                                <p class="setting-desc">Runs active particle mathematics on the background to make dashboard feel kinetic.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-bg-particles" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Section: SYSTEM INTEGRATION -->
+                    <div class="settings-section" id="set-sys">
+                        <h3>SYSTEM INTEGRATION & EEL</h3>
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Eel RPC Loop Connection</label>
+                                <p class="setting-desc">Exposes JavaScript handlers and bridges web socket triggers to Python threads.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-eel-rpc" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+
+                        <div class="settings-card">
+                            <label class="setting-label">Eel Listening Server Address</label>
+                            <input type="text" class="settings-input" id="setting-eel-port" value="http://localhost:8000" disabled>
+                            <p class="setting-desc">Port exposed for remote Python calls.</p>
+                        </div>
+
+                        <div class="settings-card flex-row justify-between">
+                            <div>
+                                <label class="setting-label">Start Minimised in System Tray</label>
+                                <p class="setting-desc">Boot automatically when OS logs in and reside in background tasks.</p>
+                            </div>
+                            <label class="switch-toggle">
+                                <input type="checkbox" id="setting-startup">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="settings-footer">
+                <button class="settings-btn cancel" id="settings-cancel-btn">CANCEL</button>
+                <button class="settings-btn save glowing-btn" id="settings-save-btn">SAVE CHANGES</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert / System notification box -->
+    <div id="sys-notification" class="sys-notification hidden">
+        <i data-lucide="shield-alert" class="notif-icon"></i>
+        <div class="notif-content">
+            <h4 id="notif-title">SYSTEM UPDATE</h4>
+            <p id="notif-message">Task executed successfully.</p>
+        </div>
+    </div>
+
+    <!-- Central Script Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

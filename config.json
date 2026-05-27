@@ -1,0 +1,17 @@
+{
+    "assistant_name": "OPTIMUS",
+    "voice_rate": 175,
+    "voice_volume": 1.0,
+    "voice_profile": "male-deep",
+    "sound_effects": true,
+    "mic_device_index": null,
+    "mic_sensitivity": 70,
+    "theme": "default-cyber",
+    "scanlines": true,
+    "bg_particles": true,
+    "continuous_listening": true,
+    "eel_rpc": true,
+    "start_minimised": false,
+    "openai_api_key": "",
+    "groq_api_key": ""
+}

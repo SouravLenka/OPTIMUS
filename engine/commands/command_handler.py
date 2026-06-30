@@ -42,7 +42,9 @@ PATTERN_HANDLERS: list[tuple[re.Pattern, Callable[[re.Match], str]]] = [
     (re.compile(r"search\s+youtube\s+for\s+(?P<q>.+)", re.I), lambda m: youtube_search(m.group("q"))),
     # Application control
     (re.compile(r"launch\s+(?P<app>\w+)", re.I), lambda m: launch_app(m.group("app"))),
+    (re.compile(r"open\s+(?P<app>\w+)", re.I), lambda m: launch_app(m.group("app"))),
     (re.compile(r"close\s+(?P<app>\w+)", re.I), lambda m: close_app(m.group("app")))
+]
 
 # --------------------------------------------------------------------------
 # Command handler wrapper
@@ -62,7 +64,7 @@ class CommandHandler:
         """
         return handle_command(command)
 
-]
+
 
 
 def handle_command(command: str) -> str:

@@ -1,7 +1,7 @@
-import eel
-import os
 import sys
+import os
 import traceback
+import signal
 
 # Ensure the working directory is the project root
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -14,41 +14,42 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'engine'))
 from engine.core.config import load_config
 from engine.ui.ui_controller import UIController
 from engine.core.startup import run_startup_diagnostics
+from engine.eel.eel_manager import init_eel, close_app  # expose close_app to frontend
+from engine.core.shutdown import run_cleanup
 
 # Load configuration
 config = load_config()
 
-# Initialize UI controller with Eel
+# Initialize UI controller with Eel (provides logging etc.)
 ui = UIController(config)
 
 # Run startup diagnostics (logs to UI)
 run_startup_diagnostics(ui)
 
-# Expose any additional Python functions to JavaScript if needed
-# Example: @eel.expose()
-# def some_backend_function(...):
-#     pass
+# Initialize Eel and start UI
+web_path = os.path.join(PROJECT_ROOT, 'web')
+if not init_eel(debug=False, size=(1280, 720), fullscreen=False):
+    ui.log("Failed to initialize Eel UI.", level="ERROR")
+    sys.exit(1)
 
-# Start the Eel server
-def start_server():
-    # Determine the web folder path
-    web_path = os.path.join(PROJECT_ROOT, 'web')
-    # Set Eel options
-    eel.init(web_path)
-    # Start the UI (index.html) with desired size and mode
-    eel.start('index.html', size=(1280, 720), block=False)
+# Register signal handlers for graceful termination (Ctrl+C, termination)
+def handle_exit(signum, frame):
+    ui.log("Received termination signal, shutting down...", level="SYS")
+    run_cleanup()
+    sys.exit(0)
 
-    # Keep the script alive while Eel runs
+for sig in (signal.SIGINT, signal.SIGTERM):
+    signal.signal(sig, handle_exit)
+
+# Keep the script alive while Eel runs – the frontend will call close_app() on window close
+try:
     while True:
-        try:
-            eel.sleep(1.0)
-        except KeyboardInterrupt:
-            break
-        except Exception as e:
-            # Log unexpected errors
-            ui.log(f"Unexpected error in main loop: {e}", level="ERROR")
-            traceback.print_exc()
-            break
+        # The backend loop is essentially idle; Eel maintains its own event loop.
+        # Sleep a short interval to keep the process responsive to signals.
+        import time
+        time.sleep(1)
+except KeyboardInterrupt:
+    handle_exit(None, None)
 
-if __name__ == '__main__':
-    start_server()
+# Ensure cleanup in case the loop exits unexpectedly
+run_cleanup()

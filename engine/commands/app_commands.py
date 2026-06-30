@@ -27,12 +27,15 @@ APP_REGISTRY = {
 
 
 def _resolve_executable(app_name: str) -> str | None:
-    """Return a full path to the executable if it exists in PATH or common locations.
+    """Return a full path to the executable if it exists.
+    First checks the APP_REGISTRY for a known executable name.
+    If not found in PATH, falls back to scanning Start‑Menu shortcuts via
+    :func:`engine.system.installed_apps.find_app`.
     """
     exe = APP_REGISTRY.get(app_name.lower())
     if not exe:
         return None
-    # Check if already absolute – if not, look in PATH.
+    # Direct absolute path?
     if os.path.isabs(exe) and Path(exe).exists():
         return exe
     # Search system PATH
@@ -40,6 +43,14 @@ def _resolve_executable(app_name: str) -> str | None:
         candidate = Path(dir) / exe
         if candidate.exists():
             return str(candidate)
+    # Fallback: look for a shortcut in the cached installed apps
+    try:
+        from engine.system.installed_apps import find_app
+        shortcut = find_app(app_name)
+        if shortcut:
+            return shortcut
+    except Exception:
+        pass
     return None
 
 

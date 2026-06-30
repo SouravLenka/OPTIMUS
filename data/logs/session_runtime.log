@@ -18,3 +18,9 @@
 [17:36:01] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
 [17:36:01] [SYS] Python 3.14.2 on Windows 11
 [17:36:01] [OK] Assistant state set to IDLE
+[23:03:24] [OK] 🚀 Starting OPTIMUS diagnostics...
+[23:03:24] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[23:03:24] [SYS] Python 3.14.2 on Windows 11
+[23:03:24] [OK] Assistant state set to IDLE
+[23:23:40] [WARN] Unknown site 'Chrome', guessing https://www.chrome.com
+[23:23:41] [OK] Opened URL: https://www.chrome.com

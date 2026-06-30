@@ -1,8 +1,10 @@
-// engine/eel/eel_manager.py
+# engine/eel/eel_manager.py
 """Eel manager for initializing and managing the Eel UI server.
 Provides a clean API for main.py and other components to start the UI,
 expose backend callbacks, and safely invoke JavaScript functions.
 """
+
+import sys
 import threading
 from pathlib import Path
 import eel
@@ -32,16 +34,13 @@ def init_eel(debug: bool = False, size: tuple = (1280, 720), fullscreen: bool = 
 
     @eel.expose
     def _frontend_ready():
-        """Called from JavaScript once the UI has loaded.
-        Sets the internal event so the backend knows it can push updates.
-        """
+        """Called from JavaScript once the UI has loaded."""
         _frontend_ready.set()
         return "ready"
 
     def _run():
-        # ``block=False`` makes eel.start non‑blocking; we keep the thread alive.
+        # block=False makes eel.start non‑blocking; we keep the thread alive.
         eel.start('index.html', size=size, mode='chrome', block=False, fullscreen=fullscreen)
-        # Keep the thread alive while the UI is open.
         while True:
             try:
                 eel.sleep(1)
@@ -49,26 +48,25 @@ def init_eel(debug: bool = False, size: tuple = (1280, 720), fullscreen: bool = 
                 break
 
     threading.Thread(target=_run, daemon=True).start()
-
-    # Wait a short period for the frontend to call back.
     _frontend_ready.wait(timeout=5)
     return _frontend_ready.is_set()
 
 def expose(name: str):
-    """Decorator to expose a Python function to the frontend.
-    Usage: ``@expose('updateClock')``
-    """
+    """Decorator to expose a Python function to the frontend."""
     def decorator(func):
         eel.expose(func)
         return func
     return decorator
 
 def call_js(func_name: str, *args, **kwargs):
-    """Safely invoke a JavaScript function exposed via Eel.
-    Silently ignores errors when the client is not yet connected.
-    """
+    """Safely invoke a JavaScript function exposed via Eel."""
     try:
         js_func = getattr(eel, func_name)
         js_func(*args, **kwargs)()
     except Exception:
         pass
+
+@eel.expose
+def close_app():
+    """Close the application from the frontend."""
+    sys.exit(0)

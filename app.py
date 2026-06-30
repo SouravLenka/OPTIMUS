@@ -14,6 +14,8 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'engine'))
 from engine.core.config import load_config
 from engine.ui.ui_controller import UIController
 from engine.core.startup import run_startup_diagnostics
+from engine.eel.eel_manager import init_eel
+from engine.commands.command_handler import CommandHandler, register_command_handler
 
 # Load configuration
 config = load_config()
@@ -25,8 +27,13 @@ ui = UIController(config)
 run_startup_diagnostics(ui)
 
 # Initialize Eel and start the UI
-web_path = os.path.join(PROJECT_ROOT, 'web')
-eel.init(web_path)
+if not init_eel(debug=False, size=(1280, 720), fullscreen=False):
+    ui.log("Failed to initialize Eel UI.", level="ERROR")
+    sys.exit(1)
+# Initialize command handling
+handler = CommandHandler()
+register_command_handler(handler)
+
 # Start the UI (index.html) with desired size and mode
 
 eel.start('index.html', size=(1280, 720), block=False)

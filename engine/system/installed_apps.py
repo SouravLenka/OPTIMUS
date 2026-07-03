@@ -15,8 +15,8 @@ def _scan_start_menu() -> Dict[str, str]:
     """
     shortcuts = {}
     start_dirs = [
-        pathlib.Path(os.getenv("APPDATA")) / "Microsoft" / "Windows" / "Start Menu" / "Programs",
-        pathlib.Path(os.getenv("PROGRAMDATA")) / "Microsoft" / "Windows" / "Start Menu" / "Programs",
+        pathlib.Path(os.environ.get("APPDATA", "C:\\")) / "Microsoft" / "Windows" / "Start Menu" / "Programs",
+        pathlib.Path(os.environ.get("PROGRAMDATA", "C:\\")) / "Microsoft" / "Windows" / "Start Menu" / "Programs",
     ]
     for start_dir in start_dirs:
         if not start_dir.is_dir():

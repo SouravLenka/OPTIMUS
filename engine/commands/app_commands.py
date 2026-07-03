@@ -33,16 +33,16 @@ def _resolve_executable(app_name: str) -> str | None:
     :func:`engine.system.installed_apps.find_app`.
     """
     exe = APP_REGISTRY.get(app_name.lower())
-    if not exe:
-        return None
-    # Direct absolute path?
-    if os.path.isabs(exe) and Path(exe).exists():
-        return exe
-    # Search system PATH
-    for dir in os.getenv("PATH", "").split(os.pathsep):
-        candidate = Path(dir) / exe
-        if candidate.exists():
-            return str(candidate)
+    if exe:
+        # Direct absolute path?
+        if os.path.isabs(exe) and Path(exe).exists():
+            return exe
+        # Search system PATH
+        for dir in os.getenv("PATH", "").split(os.pathsep):
+            candidate = Path(dir) / exe
+            if candidate.exists():
+                return str(candidate)
+                
     # Fallback: look for a shortcut in the cached installed apps
     try:
         from engine.system.installed_apps import find_app
@@ -61,9 +61,12 @@ def launch_app(app_name: str) -> str:
     exe_path = _resolve_executable(app_name)
     if not exe_path:
         logger.log(f"App launch failed – unknown app '{app_name}'.", "WARN")
-        return f"I could not locate the application '{app_name}'. You may need to add it to the registry."
+        return f"I could not locate the application '{app_name}' on your system."
     try:
-        subprocess.Popen([exe_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if hasattr(os, 'startfile'):
+            os.startfile(exe_path)
+        else:
+            subprocess.Popen([exe_path], shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         logger.log(f"Launched application: {app_name} ({exe_path})", "OK")
         return f"Launching {app_name} now."
     except Exception as e:

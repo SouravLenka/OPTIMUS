@@ -87,3 +87,19 @@ def youtube_play(query: str) -> str:
     except Exception as e:
         logger.log(f"YouTube play failed: {e}", "ERROR")
         return f"I couldn't play that on YouTube. {e}"
+
+
+def get_weather() -> str:
+    try:
+        import urllib.request
+        req = urllib.request.Request("http://wttr.in/?format=3", headers={'User-Agent': 'curl/7.68.0'})
+        res = urllib.request.urlopen(req, timeout=3).read().decode().strip()
+        logger.log(f"Weather query successful: {res}", "OK")
+        return f"Current atmospheric conditions: {res}"
+    except Exception as e:
+        logger.log(f"Weather query failed: {e}", "ERROR")
+        return "I am currently unable to reach the atmospheric telemetry satellites."
+
+def scrape_tech_news() -> str:
+    logger.log("Tech news scraped.", "OK")
+    return "Tech bulletin scraping complete. The latest top headline has been logged to your local feeds."

@@ -85,3 +85,21 @@
 [22:27:52] [WARN] Unknown site 'calculator', guessing https://www.calculator.com
 [22:27:52] [OK] Opened URL: https://www.calculator.com
 [22:27:52] [ERROR] Error executing directive: No module named 'pyttsx3'
+[22:31:03] [OK] 🚀 Starting OPTIMUS diagnostics...
+[22:31:03] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[22:31:03] [SYS] Python 3.14.2 on Windows 11
+[22:31:03] [OK] Assistant state set to IDLE
+[22:31:29] [USER] Received user directive: "open camera"
+[22:31:29] [WARN] Unknown site 'camera', guessing https://www.camera.com
+[22:31:29] [OK] Opened URL: https://www.camera.com
+[22:31:53] [USER] Received user directive: "Run weather update"
+[22:31:57] [USER] Received user directive: "Initiate diagnostic check"
+[22:31:58] [SYS] Full hardware diagnostic sweep executed.
+[22:31:58] [USER] Received user directive: "Run weather update"
+[22:31:58] [USER] Received user directive: "What is my system load?"
+[22:31:58] [USER] Received user directive: "Run weather update"
+[22:31:59] [USER] Received user directive: "What is my system load?"
+[22:34:03] [OK] 🚀 Starting OPTIMUS diagnostics...
+[22:34:03] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[22:34:03] [SYS] Python 3.14.2 on Windows 11
+[22:34:03] [OK] Assistant state set to IDLE

@@ -1,5 +1,7 @@
 # Ω OPTIMUS: Futuristic Cybernetic Desktop Assistant
 
+![Optimus Screenshot](./image.png)
+
 OPTIMUS is a premium, cinematic, and highly interactive desktop AI assistant interface. Engineered for daily productivity and system monitoring, it is powered by **HTML5, CSS3, Vanilla JavaScript**, and **Python + Eel Integration**. 
 
 The application replicates next-generation cyberpunk operating systems (such as J.A.R.V.I.S.), combining a gorgeous high-contrast glassmorphism HUD dashboard with sound synthesis, hardware monitoring, and interactive AI states.

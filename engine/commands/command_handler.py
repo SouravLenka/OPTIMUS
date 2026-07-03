@@ -14,6 +14,8 @@ from engine.commands.system_commands import (
     get_disk_usage,
     get_full_diagnostics,
     get_ip_address,
+    flush_cache,
+    index_code,
 )
 from engine.commands.web_commands import (
     open_website,
@@ -21,6 +23,8 @@ from engine.commands.web_commands import (
     google_search,
     youtube_search,
     youtube_play,
+    get_weather,
+    scrape_tech_news,
 )
 from engine.commands.app_commands import launch_app, close_app
 
@@ -31,11 +35,15 @@ PATTERN_HANDLERS: list[tuple[re.Pattern, Callable[[re.Match], str]]] = [
     (re.compile(r"\btime\b", re.I), lambda _: get_time()),
     (re.compile(r"\bdate\b", re.I), lambda _: get_date()),
     (re.compile(r"\bbattery\b", re.I), lambda _: get_battery()),
-    (re.compile(r"\bcpu|\bprocessor\b", re.I), lambda _: get_cpu_ram()),
+    (re.compile(r"\bload\b|\bcpu\b|\bprocessor\b", re.I), lambda _: get_cpu_ram()),
     (re.compile(r"\bram|\bmemory\b", re.I), lambda _: get_cpu_ram()),
     (re.compile(r"\bdisk|\bstorage\b", re.I), lambda _: get_disk_usage()),
-    (re.compile(r"\bdiagnostic|\bstatus\b", re.I), lambda _: get_full_diagnostics()),
+    (re.compile(r"\bdiagnostic|\bstatus\b|Hardware Integrity Diagnostic", re.I), lambda _: get_full_diagnostics()),
     (re.compile(r"\bip\s*address\b", re.I), lambda _: get_ip_address()),
+    (re.compile(r"System Cache Flush", re.I), lambda _: flush_cache()),
+    (re.compile(r"Project Repository Indexer", re.I), lambda _: index_code()),
+    (re.compile(r"\bweather\b", re.I), lambda _: get_weather()),
+    (re.compile(r"Tech Bulletin Scraper", re.I), lambda _: scrape_tech_news()),
     # Web actions
     (re.compile(r"open\s+(?P<site>\w+)", re.I), lambda m: open_website(m.group("site"))),
     (re.compile(r"open\s+url\s+(?P<url>https?://\S+)", re.I), lambda m: open_url(m.group("url"))),

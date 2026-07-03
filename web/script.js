@@ -1087,6 +1087,9 @@ window.addEventListener('load', () => {
             if (name) name.textContent = 'EEL: PYTHON';
         }
         console.log("Optimus OS connected successfully to Eel Python backend framework.");
+        if (eel._frontend_ready) {
+            eel._frontend_ready()();
+        }
     }
 });
 

@@ -24,3 +24,51 @@
 [23:03:24] [OK] Assistant state set to IDLE
 [23:23:40] [WARN] Unknown site 'Chrome', guessing https://www.chrome.com
 [23:23:41] [OK] Opened URL: https://www.chrome.com
+[20:26:54] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:26:54] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:26:54] [SYS] Python 3.14.2 on Windows 11
+[20:26:54] [OK] Assistant state set to IDLE
+[20:51:35] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:51:35] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:51:35] [SYS] Python 3.14.2 on Windows 11
+[20:51:35] [OK] Assistant state set to IDLE
+[20:51:40] [ERROR] Failed to initialize Eel UI.
+[20:52:19] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:52:19] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:52:19] [SYS] Python 3.14.2 on Windows 11
+[20:52:19] [OK] Assistant state set to IDLE
+[20:52:24] [ERROR] Failed to initialize Eel UI.
+[20:53:27] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:53:27] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:53:27] [SYS] Python 3.14.2 on Windows 11
+[20:53:27] [OK] Assistant state set to IDLE
+[20:53:32] [ERROR] Failed to initialize Eel UI.
+[20:53:45] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:53:45] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:53:45] [SYS] Python 3.14.2 on Windows 11
+[20:53:45] [OK] Assistant state set to IDLE
+[20:53:50] [ERROR] Failed to initialize Eel UI.
+[20:54:47] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:54:47] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:54:47] [SYS] Python 3.14.2 on Windows 11
+[20:54:47] [OK] Assistant state set to IDLE
+[20:54:52] [ERROR] Failed to initialize Eel UI.
+[20:56:34] [OK] 🚀 Starting OPTIMUS diagnostics...
+[20:56:34] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[20:56:34] [SYS] Python 3.14.2 on Windows 11
+[20:56:34] [OK] Assistant state set to IDLE
+[20:56:39] [ERROR] Failed to initialize Eel UI.
+[22:10:45] [OK] 🚀 Starting OPTIMUS diagnostics...
+[22:10:45] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[22:10:45] [SYS] Python 3.14.2 on Windows 11
+[22:10:45] [OK] Assistant state set to IDLE
+[22:10:50] [ERROR] Failed to initialize Eel UI.
+[22:13:23] [OK] 🚀 Starting OPTIMUS diagnostics...
+[22:13:23] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[22:13:23] [SYS] Python 3.14.2 on Windows 11
+[22:13:23] [OK] Assistant state set to IDLE
+[22:13:29] [ERROR] Failed to initialize Eel UI.
+[22:15:46] [OK] 🚀 Starting OPTIMUS diagnostics...
+[22:15:46] [SYS] Configuration loaded: {'assistant_name': 'OPTIMUS', 'voice_rate': 175, 'voice_volume': 1.0, 'voice_profile': 'male-deep', 'sound_effects': True, 'mic_device_index': None, 'mic_sensitivity': 70, 'theme': 'default-cyber', 'scanlines': True, 'bg_particles': True, 'continuous_listening': True, 'eel_rpc': True, 'start_minimised': False, 'openai_api_key': '', 'groq_api_key': ''}
+[22:15:46] [SYS] Python 3.14.2 on Windows 11
+[22:15:46] [OK] Assistant state set to IDLE

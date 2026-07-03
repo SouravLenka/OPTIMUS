@@ -14,7 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 WEB_ROOT = PROJECT_ROOT / "web"
 
 # Event flag indicating that the frontend has signaled readiness
-_frontend_ready = threading.Event()
+_frontend_ready_event = threading.Event()
 
 def init_eel(debug: bool = False, size: tuple = (1280, 720), fullscreen: bool = False) -> bool:
     """Initialize the Eel server.
@@ -35,12 +35,12 @@ def init_eel(debug: bool = False, size: tuple = (1280, 720), fullscreen: bool = 
     @eel.expose
     def _frontend_ready():
         """Called from JavaScript once the UI has loaded."""
-        _frontend_ready.set()
+        _frontend_ready_event.set()
         return "ready"
 
     def _run():
         # block=False makes eel.start non‑blocking; we keep the thread alive.
-        eel.start('index.html', size=size, mode='chrome', block=False, fullscreen=fullscreen)
+        eel.start('index.html', size=size, mode='chrome', block=False, port=0)
         while True:
             try:
                 eel.sleep(1)
@@ -48,8 +48,8 @@ def init_eel(debug: bool = False, size: tuple = (1280, 720), fullscreen: bool = 
                 break
 
     threading.Thread(target=_run, daemon=True).start()
-    _frontend_ready.wait(timeout=5)
-    return _frontend_ready.is_set()
+    _frontend_ready_event.wait(timeout=5)
+    return _frontend_ready_event.is_set()
 
 def expose(name: str):
     """Decorator to expose a Python function to the frontend."""

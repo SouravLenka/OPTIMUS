@@ -19,8 +19,9 @@ class AssistantLogger:
         now = time.strftime("%H:%M:%S")
         log_line = f"[{now}] [{category}] {message}\n"
         
-        # 1. Print to Python system terminal
-        print(f"[OPTIMUS] [{category}] {message}")
+        # 1. Print to Python system terminal (strip non‑ASCII to avoid console errors)
+        safe_msg = message.encode('ascii', errors='ignore').decode('ascii')
+        print(f"[OPTIMUS] [{category}] {safe_msg}")
 
         # 2. Write to persistent local log file
         with self.lock:

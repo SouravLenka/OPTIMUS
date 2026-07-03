@@ -20,6 +20,7 @@ from engine.commands.web_commands import (
     open_url,
     google_search,
     youtube_search,
+    youtube_play,
 )
 from engine.commands.app_commands import launch_app, close_app
 
@@ -40,6 +41,7 @@ PATTERN_HANDLERS: list[tuple[re.Pattern, Callable[[re.Match], str]]] = [
     (re.compile(r"open\s+url\s+(?P<url>https?://\S+)", re.I), lambda m: open_url(m.group("url"))),
     (re.compile(r"search\s+google\s+for\s+(?P<q>.+)", re.I), lambda m: google_search(m.group("q"))),
     (re.compile(r"search\s+youtube\s+for\s+(?P<q>.+)", re.I), lambda m: youtube_search(m.group("q"))),
+    (re.compile(r"play\s+(?P<q>.+?)(?:\s+on\s+youtube)?$", re.I), lambda m: youtube_play(m.group("q"))),
     # Application control
     (re.compile(r"launch\s+(?P<app>\w+)", re.I), lambda m: launch_app(m.group("app"))),
     (re.compile(r"open\s+(?P<app>\w+)", re.I), lambda m: launch_app(m.group("app"))),

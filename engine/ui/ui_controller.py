@@ -40,7 +40,11 @@ def call_python_nlp(prompt):
         state_manager.set_state(AssistantState.THINKING)
         if command_handler_ref:
             try:
-                command_handler_ref.process_command(prompt)
+                response = command_handler_ref.process_command(prompt)
+                import engine.eel.eel_manager as eel_manager
+                eel_manager.call_js('displayResponse', response)
+                from engine.voice.speaker import speaker
+                speaker.speak(response)
             except Exception as e:
                 logger.log(f"Error executing directive: {e}", "ERROR")
                 state_manager.set_state(AssistantState.ERROR)

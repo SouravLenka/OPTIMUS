@@ -68,6 +68,22 @@ def youtube_search(query: str) -> str:
     return f"Searching YouTube for '{query}'."
 
 
+import urllib.request
+import re
+
 def youtube_play(query: str) -> str:
-    """Convenience wrapper — same as youtube_search but with speech variation."""
-    return youtube_search(query)
+    """Search YouTube and play the first video result."""
+    try:
+        encoded = urllib.parse.quote_plus(query)
+        html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + encoded)
+        video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+        if video_ids:
+            url = "https://www.youtube.com/watch?v=" + video_ids[0]
+            webbrowser.open(url)
+            logger.log(f"YouTube play: '{query}' -> {url}", "OK")
+            return f"Playing {query} on YouTube."
+        else:
+            return youtube_search(query)
+    except Exception as e:
+        logger.log(f"YouTube play failed: {e}", "ERROR")
+        return f"I couldn't play that on YouTube. {e}"

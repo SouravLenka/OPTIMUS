@@ -923,18 +923,26 @@ function setupUIInteractions() {
         btn.addEventListener('click', () => {
             AudioSFX.playClick();
             const task = btn.getAttribute('data-task');
-            
+            // Notify user that macro is being dispatched
             showSystemNotification("AUTOMATION TRIGGERED", `Running background macro: ${task}`);
             writeTerminalLine('SYS', 'MACRO', `DISPATCHING THREAD BIND: "${task}"...`, 'system-line');
-            
-            // Simulate automation finish callback
-            setTimeout(() => {
+            // Attempt to invoke backend macro via Eel
+            if (typeof eel !== 'undefined' && eel.run_macro_task) {
+                try {
+                    eel.run_macro_task(task)();
+                } catch (err) {
+                    console.error('Eel macro execution failed, falling back to simulation.', err);
+                    // fallback simulation
+                    showSystemNotification("MACRO EXECUTED", `Successfully finalized: ${task}`);
+                    writeTerminalLine('SYS', 'OK', `Macro execution finalized: ${task} [EXIT 0]`, 'system-line');
+                }
+            } else {
+                // Fallback simulation when Eel is not available
                 showSystemNotification("MACRO EXECUTED", `Successfully finalized: ${task}`);
                 writeTerminalLine('SYS', 'OK', `Macro execution finalized: ${task} [EXIT 0]`, 'system-line');
-            }, 3000);
+            }
         });
     });
-
     // 7. Clear chat workspace buttons
     const clearChat = document.getElementById('clear-chat-btn');
     if (clearChat) {

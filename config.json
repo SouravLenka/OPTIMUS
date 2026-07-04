@@ -13,5 +13,11 @@
     "eel_rpc": true,
     "start_minimised": false,
     "openai_api_key": "",
-    "groq_api_key": ""
+    "groq_api_key": "",
+    "weather": {
+        "api_key": "621c6a0c4b485267a3ec44801e6154bc",
+        "default_city": "Rourkela",
+        "units": "metric",
+        "cache_minutes": 15
+    }
 }

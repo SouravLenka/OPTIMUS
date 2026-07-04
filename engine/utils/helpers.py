@@ -2,6 +2,7 @@
 """Helper utilities for the OPTIMUS backend.
 """
 import json
+import os
 from typing import Any, Dict
 
 
@@ -22,3 +23,14 @@ def merge_dicts(base: Dict, updates: Dict) -> Dict:
         else:
             base[key] = value
     return base
+
+
+def read_json_file(path: str) -> Dict:
+    """Safely read a JSON file and return a dict.
+    Returns an empty dict if the file does not exist or is invalid.
+    """
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}

@@ -467,7 +467,7 @@ body {
     flex: 1;
     display: flex;
     position: relative;
-    overflow: hidden;
+    overflow-y: auto; /* enable scrolling when content exceeds view */
 }
 
 /* --------------------------------------------------------------------------
